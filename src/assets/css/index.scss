@@ -1,0 +1,102 @@
+@import './element-ui.css';
+@import './common.css';
+body,
+div,
+dl,
+dt,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+form,
+input,
+textarea,
+p,
+th,
+td,
+ul {
+    padding: 0;
+    margin: 0;
+    -moz-box-sizing: border-box; /* Firefox3.5+ */
+    -webkit-box-sizing: border-box; /* Safari3.2+ */
+    -o-box-sizing: border-box; /* Opera9.6 */
+    -ms-box-sizing: border-box; /* IE8 */
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+ul,
+ol,
+li {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+a:focus,
+a:active {
+    outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+}
+
+.fade-enter {
+    opacity: 1;
+}
+.fade-enter-active,
+.fade-leave-active {
+    transition: all 0.5s;
+}
+.fade-enter {
+    opacity: 0;
+    transform: translateY(-30px);
+}
+.fade-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/** 滚动条样式 **/
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+    transform: rotate(-360deg);
+}
+::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background: rgba(0,164,255,0.20);
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: rgba(0,164,255,0.50);
+}
+
+.anchorBL {
+  display: none;
+}
