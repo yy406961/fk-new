@@ -1,8 +1,8 @@
 <!--
  * @Author: your name
  * @Date: 2021-01-09 09:45:52
- * @LastEditTime: 2021-01-09 10:11:12
- * @LastEditors: your name
+ * @LastEditTime: 2021-01-09 11:00:25
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \fk-new\public\index.html
 -->
@@ -13,6 +13,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <link rel="stylesheet" type="text/css" href="./js/gis/css/map.css" />
+    <link rel="stylesheet" type="text/css" href="./js/qt/DrawingManager_min.css" />
     <title>湖南省反恐监测平台</title>
   </head>
   <body>
@@ -21,5 +23,16 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script src='./js/echarts.min.js'></script>
+    <script src='./js/jquery.min.js'></script>
+    <!-- 百度地图 -->
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=pr0qVszfs4d1KcXvyZgYjvGBrIv2qgx5"></script>
+    <!-- <script type="text/javascript" src="./js/gis/map_load.js"></script> -->
+    <script type="text/javascript" src="./js/qt/DrawingManager_min.js"></script>
+    <script type="text/javascript" src="./js/qt/GeoUtils_min.js"></script>
+    <script type="text/javascript" src="./js/gis/tools/CurveLine.min.js"></script>
+    <script type="text/javascript" src="./js/gis/tools/Heatmap_min.js"></script>
+    <script type="text/javascript" src="./js/gis/tools/MarkerClusterer_min.js"></script>
+    <script type="text/javascript" src="./js/gis/tools/TextIconOverlay_min.js"></script>
   </body>
 </html>
