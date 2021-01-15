@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2021-01-09 10:00:55
- * @LastEditTime: 2021-01-09 10:02:52
- * @LastEditors: your name
+ * @LastEditTime: 2021-01-15 09:55:23
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \fk-new\src\common\axios.js
  */
@@ -14,7 +14,7 @@ import {showLoading, hideLoading} from '@/util/loading'
 const service = axios.create({
     // baseURL: '/keyBigDate',
     baseURL: 'api',
-    timeout: 8000,
+    timeout: 15000,
     withCredentials: true
 })
 
@@ -41,28 +41,30 @@ const request = (method, url, data, config = {}) => {
         const data = res.data
         const status = res.status
         if (status === 200) {
-          if (data.code === 200) {
-            Message({
-              message: data.msg,
-              type: 'success'
-            })
-            hideLoading()
-            resolve(data)
-          } else {
-            Message({
-              message: data.msg,
-              type: 'warning'
-            })
-            hideLoading()
-            resolve(data)
-          }
-        } else {
-          Message({
-            message: data.msg,
-            type: 'error'
-          })
           hideLoading()
-          reject(data)
+          resolve(data)
+        //   if (data.code === 200) {
+        //     Message({
+        //       message: data.msg,
+        //       type: 'success'
+        //     })
+        //     hideLoading()
+        //     resolve(data)
+        //   } else {
+        //     Message({
+        //       message: data.msg,
+        //       type: 'warning'
+        //     })
+        //     hideLoading()
+        //     resolve(data)
+        //   }
+        // } else {
+        //   Message({
+        //     message: data.msg,
+        //     type: 'error'
+        //   })
+        //   hideLoading()
+        //   reject(data)
         }
       })
       .catch(error => {

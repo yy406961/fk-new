@@ -100,3 +100,9 @@ a:hover {
 .anchorBL {
   display: none;
 }
+@font-face {
+  font-family: 'lcdD';
+  src: url('../fonts/LcdD.woff') format('woff'), url('../fonts/LcdD.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}

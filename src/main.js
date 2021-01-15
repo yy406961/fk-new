@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2021-01-09 09:45:52
- * @LastEditTime: 2021-01-09 10:04:04
- * @LastEditors: your name
+ * @LastEditTime: 2021-01-11 13:57:38
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \fk-new\src\main.js
  */
@@ -22,6 +22,16 @@ import '@/assets/css/index.scss'
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css'; //引入离线地图样式
 import 'leaflet-draw/dist/leaflet.draw.css';
+
+// 引入 leaflet.markercluster
+import "leaflet.markercluster/dist/MarkerCluster.css"
+import "leaflet.markercluster/dist/MarkerCluster.Default.css"
+import 'leaflet.markercluster/dist/leaflet.markercluster'
+
+// 引入 leaflet.contextmenu
+import "leaflet-contextmenu/dist/leaflet.contextmenu.css"
+import 'leaflet-contextmenu/dist/leaflet.contextmenu'
+
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
