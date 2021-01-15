@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-01-12 10:42:02
- * @LastEditTime: 2021-01-15 09:51:55
+ * @LastEditTime: 2021-01-15 10:13:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \fk-new\src\views\keyPerson\components\historyCom.vue
@@ -254,7 +254,7 @@ export default {
       // console.log(this.queryPhone)
       this.tableList = []
       getAPPTop({
-        msisdn: '13762112991',
+        msisdn: this.queryPhone,
         type: '1',
         flag: '1'
       }).then( res => {
@@ -266,7 +266,7 @@ export default {
       // console.log(this.queryPhone)
       this.tableList = []
       getURLTop({
-        msisdn: '13762112991',
+        msisdn: this.queryPhone,
         type: '1',
         flag: '1'
       }).then( res => {

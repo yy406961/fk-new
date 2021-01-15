@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-01-09 09:57:01
- * @LastEditTime: 2021-01-11 16:03:36
+ * @LastEditTime: 2021-01-15 10:46:14
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \fk-new\src\components\layout\index.vue
@@ -12,13 +12,13 @@
       <div class="logo">
         <gTime class="gTime"></gTime>
         <img src="@/assets/img/head/logo.png" alt="">
-        <div class="userInfo">
+        <!-- <div class="userInfo">
           <img src="@/assets/img/head/person.png" alt="">
           <span>{{ userName }}</span>
           <i class="line"></i>
           <img src="@/assets/img/head/change.png" alt="">
           <img src="@/assets/img/head/exit.png" alt="">
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="elContainer">

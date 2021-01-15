@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-01 14:30:19
- * @LastEditTime: 2020-12-01 15:10:06
+ * @LastEditTime: 2021-01-15 14:26:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \data-config-system\src\assets\js\tileLayer.baidu.js
@@ -9,8 +9,8 @@
 require('proj4')
 require('proj4leaflet')
 
-// const titleD = 'http://15.15.11.128:8383/Map/Layer/{z}/{x}/{y}.jpg'
-const titleD = 'http://113.240.220.4:9280/roadmap/{z}/{x}/{y}.png'
+const titleD = 'http://15.15.11.128:8222/mapdata/roadmap/{z}/{x}/{y}.png'
+// const titleD = 'http://113.240.220.4:9280/roadmap/{z}/{x}/{y}.png'
 
 var urlPath = titleD;
 //请引入 proj4.js 和 proj4leaflet.js
@@ -55,12 +55,12 @@ L.tileLayer.baidu = function (option) {
         case "custom"://Custom 各种自定义样式
             //可选值：dark,midnight,grayscale,hardedge,light,redalert,googlelite,grassgreen,pink,darkgreen,bluish
             option.customid = option.customid || 'midnight';
-            layer = L.tileLayer('http://api{s}.map.bdimg.com/customimage/tile?&x={x}&y={y}&z={z}&scale=1&customid=' + option.customid, {
-                name: option.name, subdomains: "012", tms: true
-            });
-            // layer = L.tileLayer(urlPath, {
-            //     name:option.name,subdomains: subdomains, tms: true
+            // layer = L.tileLayer('http://api{s}.map.bdimg.com/customimage/tile?&x={x}&y={y}&z={z}&scale=1&customid=' + option.customid, {
+            //     name: option.name, subdomains: "012", tms: true
             // });
+            layer = L.tileLayer(urlPath, {
+                name:option.name,subdomains: subdomains, tms: true
+            });
             break;
 
         case "time"://实时路况
