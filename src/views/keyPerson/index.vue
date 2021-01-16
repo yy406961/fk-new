@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-01-09 09:35:01
- * @LastEditTime: 2021-01-15 09:19:55
+ * @LastEditTime: 2021-01-16 12:15:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \fk-new\src\views\keyPerson\index.vue
@@ -38,21 +38,28 @@
       <span  class="listTitle">重点人员列表</span>
       <i @click="switchList" class="switchList el-icon-d-arrow-right"></i>
       <div v-if="listShow" class="treeAndPhone">
+        <el-input
+          class="inputPart"
+          placeholder="请输入姓名或手机号码"
+          v-model="filterPhone">
+        </el-input>
         <el-tree
+          show-checkbox
           :data="listdata"
           node-key="id"
           :filter-node-method="filterNode"
           :props="defaultProps"
-          @node-click="nodeCheck"
-          default-expand-all
+          @check="checkClick"
+          :default-expanded-keys="['03']"
           ref="tree"
-          class="treePart">
+          class="treePart"
+          :style="treeHight">
           <span class="custom-tree-node" slot-scope="{ node, data }">
             <i :class="['levelIcon', data.className]"></i>
             <span style="margin-left: 5px">{{ node.label }} </span>
           </span>
         </el-tree>
-        <div class="phonePart">
+        <!-- <div class="phonePart">  :style="treeHight"
           <el-input
             class="inputPart"
             placeholder="请输入姓名或手机号码"
@@ -64,7 +71,7 @@
               {{ item.xm }} {{ item.telphone }}
             </p>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- 导出功能弹窗 -->
@@ -134,19 +141,21 @@ export default {
         { type: 1, name:'上控号码', data: 0 },
         { type: 2, name:'在网号码', data: 0 },
         { type: 3, name:'今日在线号码', data: 0 },
-        { type: 4, name:'近三日消失人', data: 0 },
+        { type: 4, name:'近三日消失人员', data: 0 },
         { type: 5, name:'预警消息', data: 0 }
       ],
       numActive: 1,
       listShow: false,
       filterText: '',
+      filterPhone: '',
+      filterArr: ['01', '02', '03'],
       listdata: [
         {
           id: '01',
           label: '省厅关注人员',
           className: 'levelFirst',
           children: [{
-            id: '001',
+            id: '03',
             label: '涉恐人员',
             className: 'levelS',
             children: []
@@ -191,14 +200,24 @@ export default {
         })
         this.showPhoneData = filter
       }
+    },
+    filterPhone(val) {
+      this.$refs.tree.filter(val);
     }
+    // listShow(val) {
+    //   if (val) {
+
+    //   } else {
+    //     $('listPart').height('calc(100% - 15px)')
+    //   }
+    // }
   },
   computed: {
     warnHeight() {
       let h = $(window).height() - $(window).height() * 0.15 - 50 - 56 - 40 - 50
       return h
     },
-    phoneHight() {
+    treeHight() {
       let h = $(window).height() - 55 - 10 - 30 - 20 - 60
       return {
         height: h + 'px'
@@ -253,38 +272,31 @@ export default {
     },
     // 获取重点人列表 涉恐人员分类
     getKeyList() {
-      // let data = [
-      //   { id: 21, gj: '重点人' },
-      //   { id: 22, gj: '经商务工' },
-      //   { id: 23, gj: '有组织务工' },
-      //   { id: 24, gj: '旅游探亲访友及其他' },
-      //   { id: 25, gj: '学生' },
-      //   { id: 26, gj: '其他' },
-      //   { id: 27, gj: '关注人员' },
-      //   { id: 28, gj: 'null' }
-      // ]
-      // data.forEach(item => {
-      //   item.label = item.gj
-      // })
-      // this.listdata[0].children[0].children = data
       ZdrPersTree().then( res => {
-        res.forEach(item => {
-          item.label = item.gj
-          item.className = 'levelThree'
+        this.listdata[0].children[0].children = res.data
+        res.data.forEach(item => {
+          this.filterArr.push(item.id)
         })
-        this.listdata[0].children[0].children = res
       })
     },
     // 重点人信息列表节点点击
-    nodeCheck(checkedNodes) {
-      if (checkedNodes.gj) {
-        ZdrLatAndLngQuery({ zdryxl: checkedNodes.gj }).then( res => {
-          this.phoneData = res
-          this.showPhoneData = res
-          this.mapData = res
-          this.numActive = -1
-        })
-      }
+    // nodeCheck(checkedNodes) {
+    //   if (checkedNodes.gj) {
+    //     ZdrLatAndLngQuery({ zdryxl: checkedNodes.gj }).then( res => {
+    //       this.phoneData = res
+    //       this.showPhoneData = res
+    //       this.mapData = res
+    //       this.numActive = -1
+    //     })
+    //   }
+    // },
+    checkClick() {
+      let data = this.$refs.tree.getCheckedNodes()
+      let filter = data.filter(item => {
+        return this.filterArr.indexOf(item.id) === -1
+      })
+      this.mapData = filter
+      this.numActive = -1
     },
     // 单个重点人点击事件
     phoneClick(data) {
@@ -294,11 +306,11 @@ export default {
     switchList() {
       this.listShow = !this.listShow
       if (this.listShow) {
-        $('.switchList').removeClass('el-icon-d-arrow-left')
-        $('.switchList').addClass('el-icon-d-arrow-right')
-      } else {
         $('.switchList').removeClass('el-icon-d-arrow-right')
         $('.switchList').addClass('el-icon-d-arrow-left')
+      } else {
+        $('.switchList').removeClass('el-icon-d-arrow-left')
+        $('.switchList').addClass('el-icon-d-arrow-right')
       }
     },
     // 重点人列表帅选
@@ -502,9 +514,11 @@ export default {
       margin: 10px 0;
     }
     .treeAndPhone {
-      display: flex;
+      // display: flex;
       .treePart {
-        margin-top: 10px;
+        // margin-top: 10px;
+        overflow: auto;
+        padding-right: 10px;
         .levelIcon {
           display: inline-block;
           width: 20px;

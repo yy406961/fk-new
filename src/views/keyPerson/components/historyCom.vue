@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-01-12 10:42:02
- * @LastEditTime: 2021-01-15 10:13:16
+ * @LastEditTime: 2021-01-15 16:51:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \fk-new\src\views\keyPerson\components\historyCom.vue
@@ -172,7 +172,6 @@ export default {
     },
     // 查询历史轨迹确定时间区间
     checkTime() {
-      console.log(this.timeForm)
       let begintime = this.timeForm.begintime
       let endtime = this.timeForm.endtime
       if (begintime === '' || endtime === '' || endtime === null || begintime === null) {
@@ -210,17 +209,12 @@ export default {
         startTime: this.formatTime(this.timeForm.begintime),
         endTime: this.formatTime(this.timeForm.endtime)
       }).then( res => {
-        this.historyData = res
+        if (res.code === 200) {
+          this.historyData = res.data
+        } else {
+          this.$message.warning(res.msg)
+        }
       })
-      // lsgjInfo({ 
-      //   mobile: '15806386905',
-      //   idcard: '',
-      //   startTime: '20210106000000',
-      //   endTime: '20210113230000'
-      // }).then( res => {
-      //   console.log('ddddddddddd', res)
-      //   this.historyData = res
-      // })
     },
     // 时间格式化
     formatTime(date) {
@@ -251,7 +245,6 @@ export default {
     },
     // 获取APP日志数据
     getAppData() {
-      // console.log(this.queryPhone)
       this.tableList = []
       getAPPTop({
         msisdn: this.queryPhone,
@@ -263,7 +256,6 @@ export default {
     },
     // 获取上网日志数据
     getNetData() {
-      // console.log(this.queryPhone)
       this.tableList = []
       getURLTop({
         msisdn: this.queryPhone,

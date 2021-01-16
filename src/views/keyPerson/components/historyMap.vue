@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-01-12 11:18:27
- * @LastEditTime: 2021-01-15 09:17:57
+ * @LastEditTime: 2021-01-15 14:48:27
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \fk-new\src\views\keyPerson\components\historyMap.vue
@@ -46,7 +46,7 @@ export default {
         minZoom: 3,
         maxZoom: 18,
         center: [28.2120, 112.9980],
-        zoom: 13,
+        zoom: 14,
         zoomControl: false,
         attributionControl: false,
         crs: L.CRS.Baidu

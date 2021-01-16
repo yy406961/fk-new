@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-01-09 10:51:34
- * @LastEditTime: 2021-01-14 15:34:13
+ * @LastEditTime: 2021-01-15 14:48:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \fk-new\src\views\keyPerson\components\leafLetMap.vue
@@ -90,7 +90,7 @@ export default {
         minZoom: 3,
         maxZoom: 18,
         center: [28.2120, 112.9980],
-        zoom: 13,
+        zoom: 14,
         zoomControl: false,
         attributionControl: false,
         crs: L.CRS.Baidu
