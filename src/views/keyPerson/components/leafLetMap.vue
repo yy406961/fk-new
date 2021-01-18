@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-01-09 10:51:34
- * @LastEditTime: 2021-01-15 14:48:12
+ * @LastEditTime: 2021-01-18 10:56:00
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \fk-new\src\views\keyPerson\components\leafLetMap.vue
@@ -95,15 +95,21 @@ export default {
         attributionControl: false,
         crs: L.CRS.Baidu
       })
+      this.map.on('zoomend', (e) => {
+        this.rightShow = false
+      })
+      this.map.on('movestart', (e) => {
+        this.rightShow = false
+      })
       L.tileLayer.baidu({ layer: 'custom', customid: 'googlelite' }).addTo(this.map);
       // 0 失联号码
-      this.shilian = L.icon({iconUrl: '/img/shilian.png', iconSize: [18, 26],  iconAnchor: [9, 32], popupAnchor: [1, -38] });
+      this.shilian = L.icon({iconUrl: '/img/shilian.png', iconSize: [22, 30],  iconAnchor: [11, 36], popupAnchor: [1, -38] });
       // 1 在网号码，今日发现信令
-      this.faxian = L.icon({iconUrl: '/img/faxian.png', iconSize: [18, 26],  iconAnchor: [9, 32], popupAnchor: [1, -38] });
+      this.faxian = L.icon({iconUrl: '/img/faxian.png', iconSize: [22, 30],  iconAnchor: [11, 36], popupAnchor: [1, -38] });
       // 2 在网号码，今日未发现信令
-      this.weifaxian = L.icon({iconUrl: '/img/weifaxian.png', iconSize: [18, 26],  iconAnchor: [9, 32], popupAnchor: [1, -38] });
+      this.weifaxian = L.icon({iconUrl: '/img/weifaxian.png', iconSize: [22, 30],  iconAnchor: [11, 36], popupAnchor: [1, -38] });
       // 3 在网号码，近三日未发现信令
-      this.sanri = L.icon({iconUrl: '/img/sanri.png', iconSize: [18, 26],  iconAnchor: [9, 32], popupAnchor: [1, -38] });
+      this.sanri = L.icon({iconUrl: '/img/sanri.png', iconSize: [22, 30],  iconAnchor: [11, 36], popupAnchor: [1, -38] });
     },
     // 点聚合
     setPointGroup() {
@@ -142,8 +148,8 @@ export default {
         this.checkPhone = a.sourceTarget.telphone
         this.$emit('checkPhone', this.checkPhone)
         this.$nextTick(() => {
-          $('.rightMenu').css('left', a.layerPoint.x + 'px')
-          $('.rightMenu').css('top', a.layerPoint.y + 'px')
+          $('.rightMenu').css('left', a.containerPoint.x + 'px')
+          $('.rightMenu').css('top', a.containerPoint.y + 'px')
         })
       })
       // 如果只有一个点，调整地图视角

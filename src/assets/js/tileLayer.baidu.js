@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-01 14:30:19
- * @LastEditTime: 2021-01-16 08:55:30
+ * @LastEditTime: 2021-01-18 14:32:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \data-config-system\src\assets\js\tileLayer.baidu.js
@@ -9,8 +9,17 @@
 require('proj4')
 require('proj4leaflet')
 
-const titleD = 'http://15.15.11.128:8222/mapdata/roadmap/{z}/{x}/{y}.png'
-// const titleD = 'http://113.240.220.4:9280/roadmap/{z}/{x}/{y}.png'
+var href = window.location.href;
+var titleD;
+if(href.match('15.15')){
+    titleD = 'http://15.15.11.128:8222/mapdata/roadmap/{z}/{x}/{y}.png'
+} else if(href.match('10.142.17')){
+    titleD = 'http://10.142.17.117:8222/mapdata/roadmap/{z}/{x}/{y}.png'
+} else if(href.match('localhost')){
+    titleD = 'http://api{s}.map.bdimg.com/customimage/tile?&x={x}&y={y}&z={z}&scale=1&customid=googlelite'
+}
+
+// const titleD = 'http://15.15.11.128:8222/mapdata/roadmap/{z}/{x}/{y}.png'
 
 var urlPath = titleD;
 //请引入 proj4.js 和 proj4leaflet.js
@@ -55,12 +64,12 @@ L.tileLayer.baidu = function (option) {
         case "custom"://Custom 各种自定义样式
             //可选值：dark,midnight,grayscale,hardedge,light,redalert,googlelite,grassgreen,pink,darkgreen,bluish
             option.customid = option.customid || 'midnight';
-            layer = L.tileLayer('http://api{s}.map.bdimg.com/customimage/tile?&x={x}&y={y}&z={z}&scale=1&customid=' + option.customid, {
-                name: option.name, subdomains: "012", tms: true
-            });
-            // layer = L.tileLayer(urlPath, {
-            //     name:option.name,subdomains: subdomains, tms: true
+            // layer = L.tileLayer('http://api{s}.map.bdimg.com/customimage/tile?&x={x}&y={y}&z={z}&scale=1&customid=' + option.customid, {
+            //     name: option.name, subdomains: "012", tms: true
             // });
+            layer = L.tileLayer(urlPath, {
+                name:option.name,subdomains: subdomains, tms: true
+            });
             break;
 
         case "time"://实时路况

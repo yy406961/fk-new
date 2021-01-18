@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-09 10:00:55
- * @LastEditTime: 2021-01-15 09:55:23
+ * @LastEditTime: 2021-01-18 11:57:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \fk-new\src\common\axios.js
@@ -12,9 +12,8 @@ import QS from 'qs'
 import {showLoading, hideLoading} from '@/util/loading'
 
 const service = axios.create({
-    // baseURL: '/keyBigDate',
     baseURL: 'api',
-    timeout: 15000,
+    timeout: 25000,
     withCredentials: true
 })
 
@@ -68,6 +67,10 @@ const request = (method, url, data, config = {}) => {
         }
       })
       .catch(error => {
+        Message({
+          message: '网络错误',
+          type: 'error'
+        })
         hideLoading()
         reject(error)
       })

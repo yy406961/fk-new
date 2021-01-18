@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-01-12 10:42:02
- * @LastEditTime: 2021-01-15 16:51:35
+ * @LastEditTime: 2021-01-18 14:09:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \fk-new\src\views\keyPerson\components\historyCom.vue
@@ -15,9 +15,11 @@
       <span :class="['btnItem',  tabActive === 1 ? 'btnActive' : '']" @click="tabChange(1)">APP日志</span>
       <span :class="['btnItem',  tabActive === 2 ? 'btnActive' : '']" @click="tabChange(2)">上网日志</span>
     </div>
+    <el-button type="primary" @click="showTimeChose" class="timeChose">历史轨迹时间选择</el-button>
+    <!-- <el-button type="primary" @click="playBack" class="playBack">历史轨迹回放</el-button> -->
     <!-- 历史轨迹地图 -->
     <div class="mapPart" >
-      <mapCom id="historyMap" :data="historyData"></mapCom>
+      <mapCom id="historyMap" :data="historyData" ref="historyMap"></mapCom>
       <div class="personInfo ">
         <span>姓名：{{ personName }}</span>
         <span>手机号：{{ queryPhone }}</span>
@@ -59,8 +61,13 @@
     </div>
     <!-- 历史轨迹时间选择 -->
     <el-dialog title="时间范围" :visible.sync="timeDialog" width="30%" :modal-append-to-body="false">
-      <el-form ref="ruleForm" :model="timeForm"  class="demo-ruleForm" label-width="100px"
-                size="mini">
+      <div style="margin-bottom: 20px">
+        <el-radio v-model="timeType" label="0">近一天</el-radio>
+        <el-radio v-model="timeType" label="1">近一周</el-radio>
+        <el-radio v-model="timeType" label="2">时间段</el-radio>
+      </div>
+      <el-form ref="ruleForm" :model="timeForm"  class="demo-ruleForm" label-width="80px"
+        label-position="left" size="mini" :disabled="timeDisabled">
         <el-form-item label="开始时间" prop="begintime">
           <el-date-picker
             v-model="timeForm.begintime"
@@ -121,6 +128,25 @@ export default {
         home: '暂无数据',
         bankName: '暂无数据',
         bankNumber: '暂无数据',
+      },
+      timeType: '0',
+      timeDisabled: true
+    }
+  },
+  watch: {
+    timeType(val) {
+      if (val === '0') {
+        this.timeDisabled = true
+        this.timeForm.begintime = new Date(new Date() - 24 * 60 * 60 * 1000)
+        this.timeForm.endtime = new Date()
+      } else if (val === '1') {
+        this.timeDisabled = true
+        this.timeForm.begintime = new Date(new Date() - 7 * 24 * 60 * 60 * 1000)
+        this.timeForm.endtime = new Date()
+      } else {
+        this.timeDisabled = false
+        this.timeForm.begintime = new Date(new Date() - 24 * 60 * 60 * 1000)
+        this.timeForm.endtime = new Date()
       }
     }
   },
@@ -133,9 +159,8 @@ export default {
   mounted() {
     this.tabActive = this.activePage
     if (this.activePage === 0) {
-      this.timeDialog = true
-      this.timeForm.begintime = new Date(new Date()-24 * 60 * 60 * 1000)
-      this.timeForm.endtime = new Date()
+      this.getInfoData()
+      this.getPersonName()
     }
     if (this.activePage === 1) {
       this.tableTitle = 'APP日志列表'
@@ -155,11 +180,8 @@ export default {
     tabChange(type) {
       this.tabActive = type
       if (type === 0) {
-        if (!this.isQuery) {
-          this.timeDialog = true
-          this.timeForm.begintime = new Date(new Date() - 24 * 60 * 60 * 1000)
-          this.timeForm.endtime = new Date()
-        }
+        this.getInfoData()
+        this.getPersonName()
       }
       if (type === 1) {
         this.tableTitle = 'APP日志列表'
@@ -169,6 +191,17 @@ export default {
         this.tableTitle = '上网日志列表'
         this.getNetData()
       }
+    },
+    // 历史轨迹时间选择
+    showTimeChose() {
+      this.timeDialog = true
+      this.timeType = '0'
+      this.timeForm.begintime = new Date(new Date() - 24 * 60 * 60 * 1000)
+      this.timeForm.endtime = new Date()
+    },
+    // 历史轨迹回放
+    playBack() {
+      this.$refs.historyMap.playback()
     },
     // 查询历史轨迹确定时间区间
     checkTime() {
@@ -183,15 +216,13 @@ export default {
         return
       }
       let day = this.DateMinus(begintime, endtime)
-      if (day > 3){
-        this.$message.warning('时间跨度不能大于三天,请重新选择')
+      if (day > 7){
+        this.$message.warning('时间跨度不能大于七天,请重新选择')
         return
       }
       this.timeDialog = false
       this.isQuery = true
       this.getHistoryData()
-      this.getInfoData()
-      this.getPersonName()
     },
     DateMinus(date1, date2){
       let sdate = new Date(date1);
@@ -312,13 +343,25 @@ export default {
       background-size: 100% 100%;
     }
   }
+  .timeChose {
+    position: absolute;
+    left: 10px;
+    top: 50px;
+    z-index: 2001;
+  }
+  .playBack {
+    position: absolute;
+    left: 0px;
+    bottom: 10px;
+    z-index: 2001;
+  }
   .mapPart {
     position: relative;
     height: calc(100% - 43px);
     .personInfo {
       display: flex;
       flex-direction: column;
-      z-index: 3001;
+      z-index: 2001;
       background: rgba(9, 25, 61, 0.75);
       position: absolute;
       right: 0;
