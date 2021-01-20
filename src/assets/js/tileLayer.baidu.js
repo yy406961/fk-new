@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-01 14:30:19
- * @LastEditTime: 2021-01-18 14:32:32
+ * @LastEditTime: 2021-01-19 16:30:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \data-config-system\src\assets\js\tileLayer.baidu.js
@@ -13,10 +13,8 @@ var href = window.location.href;
 var titleD;
 if(href.match('15.15')){
     titleD = 'http://15.15.11.128:8222/mapdata/roadmap/{z}/{x}/{y}.png'
-} else if(href.match('10.142.17')){
+} else if(href.match('10.142')){
     titleD = 'http://10.142.17.117:8222/mapdata/roadmap/{z}/{x}/{y}.png'
-} else if(href.match('localhost')){
-    titleD = 'http://api{s}.map.bdimg.com/customimage/tile?&x={x}&y={y}&z={z}&scale=1&customid=googlelite'
 }
 
 // const titleD = 'http://15.15.11.128:8222/mapdata/roadmap/{z}/{x}/{y}.png'

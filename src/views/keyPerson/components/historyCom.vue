@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-01-12 10:42:02
- * @LastEditTime: 2021-01-18 14:09:29
+ * @LastEditTime: 2021-01-19 09:42:22
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \fk-new\src\views\keyPerson\components\historyCom.vue
@@ -15,8 +15,7 @@
       <span :class="['btnItem',  tabActive === 1 ? 'btnActive' : '']" @click="tabChange(1)">APP日志</span>
       <span :class="['btnItem',  tabActive === 2 ? 'btnActive' : '']" @click="tabChange(2)">上网日志</span>
     </div>
-    <el-button type="primary" @click="showTimeChose" class="timeChose">历史轨迹时间选择</el-button>
-    <!-- <el-button type="primary" @click="playBack" class="playBack">历史轨迹回放</el-button> -->
+    <el-button type="primary" @click="showTimeChose" class="timeChose">时间选择</el-button>
     <!-- 历史轨迹地图 -->
     <div class="mapPart" >
       <mapCom id="historyMap" :data="historyData" ref="historyMap"></mapCom>
@@ -159,6 +158,9 @@ export default {
   mounted() {
     this.tabActive = this.activePage
     if (this.activePage === 0) {
+      this.timeForm.begintime = new Date(new Date() - 24 * 60 * 60 * 1000)
+      this.timeForm.endtime = new Date()
+      this.getHistoryData()
       this.getInfoData()
       this.getPersonName()
     }
@@ -180,6 +182,9 @@ export default {
     tabChange(type) {
       this.tabActive = type
       if (type === 0) {
+        this.timeForm.begintime = new Date(new Date() - 24 * 60 * 60 * 1000)
+        this.timeForm.endtime = new Date()
+        this.getHistoryData()
         this.getInfoData()
         this.getPersonName()
       }
@@ -198,10 +203,6 @@ export default {
       this.timeType = '0'
       this.timeForm.begintime = new Date(new Date() - 24 * 60 * 60 * 1000)
       this.timeForm.endtime = new Date()
-    },
-    // 历史轨迹回放
-    playBack() {
-      this.$refs.historyMap.playback()
     },
     // 查询历史轨迹确定时间区间
     checkTime() {
@@ -347,12 +348,6 @@ export default {
     position: absolute;
     left: 10px;
     top: 50px;
-    z-index: 2001;
-  }
-  .playBack {
-    position: absolute;
-    left: 0px;
-    bottom: 10px;
     z-index: 2001;
   }
   .mapPart {
